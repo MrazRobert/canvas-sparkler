@@ -34,10 +34,13 @@ class Sparkle {
     this.x = x
     this.y = y
     this.radius = radius
+    this.radiusIncrement = this.radius * -0.01
     this.color = color
     this.velocity = velocity
-    this.gravity = 3
-    this.friction = 0.4
+    this.gravity = 1
+    this.frictionX = utils.randomIntFromRange(10, 20) * 0.1
+    this.frictionY = utils.randomIntFromRange(2, 6) * -0.1
+    this.bounced = false
     this.alpha = 1
   }
 
@@ -57,45 +60,44 @@ class Sparkle {
   update() {
     this.draw()
 
-    this.velocity.x *= 0.95
-    // this.velocity.y *= this.friction
-    // this.velocity.y += this.gravity
     this.x += this.velocity.x
     this.y += this.velocity.y
-    // this.alpha -= 0.008
-    this.radius -= 0.1
+    this.radius += this.radiusIncrement
 
-    // when sparkla hits bottom of screen
+    // when sparkle hits bottom
     if (this.y + this.radius + this.velocity.y > canvas.height - groundHeight) {
-      // this.friction = 0.6
-      this.velocity.y = -this.velocity.y * this.friction
-    } else {
-      this.velocity.y += this.gravity
+      if (!this.bounced) {
+        this.velocity.x *= this.frictionX
+      } else {
+        this.velocity.x *= 0.9
+      }
+      this.bounced = true
+      this.velocity.y *= this.frictionY
+      this.y = canvas.height - this.radius
     }
-
+    this.velocity.y += this.gravity
   }
 }
 
 // Implementation
 let sparkles = []
-const power = 20
-const sparkleDensity = 5
+const sparkleDensity = 3
+const sparkleSize = 8
 
 function init() {
 
   for (let i = 0; i < sparkleDensity; i++) {
-    const angle = utils.randomIntFromRange(1, 360)
     const hue = utils.randomIntFromRange(30, 60)
     const light = utils.randomIntFromRange(50, 100)
     const opacity = 1
     sparkles.push(new Sparkle(
       mouse.x,
       mouse.y,
-      8,
+      sparkleSize,
       `hsla(${hue},100%,${light}%,${opacity})`,
       {
-        x: Math.cos(angle) * Math.random() * power,
-        y: Math.sin(angle) * Math.random() * power
+        x: utils.randomIntFromRange(-50, 50) * 0.1,
+        y: utils.randomIntFromRange(-10, 10)
       }
     ))
   }
@@ -118,5 +120,4 @@ function animate() {
   })
 }
 
-init()
 animate()
