@@ -10,7 +10,7 @@
 ## Description
 
 <p align="center">
-<img src="./public/image/sparkles.gif" width="80%"></p>
+<img src="./public/image/sparkler.gif" width="80%"></p>
 
 <p>HTML5 Canvas, JavaScript and Webpack 5</p>
 

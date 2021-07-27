@@ -49,7 +49,7 @@ class Sparkle {
   drawArc(c, blur = 0) {
     c.beginPath()
     if (blur > 0) {
-      c.filter = `blur(${blur}px)`
+      // c.filter = `blur(${blur}px)`
     }
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
     c.fillStyle = this.color
@@ -114,19 +114,20 @@ function init() {
   }
 }
 
+function canvasProperties(c, canvas) {
+  c.globalCompositeOperation = 'source-over'
+  c.fillStyle = 'rgba(0, 0, 0, 1)'
+  c.fillRect(0, 0, canvas.width, canvas.height)
+  c.globalCompositeOperation = 'lighter'
+}
+
 // Animation Loop
 function animate() {
   requestAnimationFrame(animate)
-  c1.globalCompositeOperation = 'source-over'
-  c1.fillStyle = 'rgba(0, 0, 0, 1)'
-  c1.fillRect(0, 0, canvas1.width, canvas1.height)
-  c1.globalCompositeOperation = 'lighter'
   
-  c2.globalCompositeOperation = 'source-over'
-  c2.fillStyle = 'rgba(0, 0, 0, 1)'
-  c2.fillRect(0, 0, canvas2.width, canvas2.height)
-  c2.globalCompositeOperation = 'lighter'
-
+  canvasProperties(c1, canvas1)
+  canvasProperties(c2, canvas2)
+  
   init()
 
   sparkles.forEach((sparkle, index) => {
