@@ -63,8 +63,8 @@ class Sparkle {
     c2.save()
     c2.scale(1, -1)
     c2.translate(0, -canvas2.height)
-    c2.globalAlpha = 0.3
-    this.drawArc(c2, 1)
+    // c2.globalAlpha = 0.3
+    this.drawArc(c2, 10)
     c2.restore()
   }
 
