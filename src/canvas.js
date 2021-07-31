@@ -49,7 +49,7 @@ class Sparkle {
   drawArc(c, blur = 0) {
     c.beginPath()
     if (blur > 0) {
-      c.filter = `blur(${blur}px)`
+      // c.filter = `blur(${blur}px)`
     }
     c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
     c.fillStyle = this.color
@@ -63,8 +63,8 @@ class Sparkle {
     c2.save()
     c2.scale(1, -1)
     c2.translate(0, -canvas2.height)
-    // c2.globalAlpha = 0.3
-    this.drawArc(c2, 10)
+    c2.globalAlpha = 0.3
+    this.drawArc(c2, 1)
     c2.restore()
   }
 
